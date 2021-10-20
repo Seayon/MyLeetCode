@@ -26,6 +26,16 @@ public class RemoveDuplicates {
         assertEquals(4, solution.removeDuplicates(new int[]{0, 1, 1, 2, 4}));
         assertEquals(4, solution.removeDuplicates(new int[]{0, 1, 2, 4}));
         assertEquals(5, solution.removeDuplicates(new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}));
+        assertEquals(2, solution.removeDuplicates(new int[]{1, 1, 2}));
+        assertEquals(0, solution.removeDuplicates(new int[]{}));
+        assertEquals(4, solution.removeDuplicates(new int[]{0, 0, 0, 0, 0, 1, 2, 3}));
+        assertEquals(4, solution.removeDuplicates(new int[]{0, 1, 2, 3, 3, 3, 3, 3}));
+        assertEquals(4, solution.removeDuplicates(new int[]{0, 0, 0, 0, 0, 1, 1, 1, 2, 3}));
+        assertEquals(4, solution.removeDuplicates(new int[]{0, 0, 0, 0, 0, 1, 1, 1, 2, 3, 3, 3, 3, 3}));
+        assertEquals(5, solution.removeDuplicates(new int[]{-1, 0, 0, 0, 0, 1, 2, 3}));
+        assertEquals(5, solution.removeDuplicates(new int[]{-1, -1, 0, 0, 0, 0, 1, 2, 3}));
+        assertEquals(6, solution.removeDuplicates(new int[]{-2, -1, -1, 0, 0, 0, 0, 1, 2, 3}));
+        assertEquals(7, solution.removeDuplicates(new int[]{-3, -3, -3, -2, -1, -1, 0, 0, 0, 0, 1, 2, 3}));
 //        {0, 0, 1, 1, 1, 2, 2, 3, 3, 4}
 //        {0, 1, 1, 1, 1, 2, 2, 3, 3, 4}
 //        {0, 1, 2, 1, 1, 2, 2, 3, 3, 4}
@@ -35,29 +45,22 @@ public class RemoveDuplicates {
 
     class Solution {
         public int removeDuplicates(int[] nums) {
-            int duplicateIndex = nums.length;
-            boolean skip = false;
+            int startJ = 0;
             for (int i = 0; i < nums.length - 1; i++) {
-                if (skip) break;
-                if (nums[i + 1] > nums[i + 1]) {
-//                    i++;
-                    continue;
-                } else {
-                    duplicateIndex = i + 1;
-                    for (int j = duplicateIndex + 1; j < nums.length; j++) {
-                        if (nums[j] > nums[duplicateIndex - 1]) {
-                            nums[duplicateIndex] = nums[j];
-//                            i++;
-                            if (j == nums.length - 1) {
-                                skip = true;
-                            }
+                if (nums[i] >= nums[i + 1]) {
+                    for (int j = Math.max(i + 1, startJ); j < nums.length; j++) {
+                        startJ = j;
+                        if (nums[j] > nums[i]) {
+                            nums[i + 1] = nums[j];
                             break;
+                        }
+                        if (j == nums.length - 1) {
+                            return i + 1;
                         }
                     }
                 }
-
             }
-            return duplicateIndex + 1;
+            return nums.length;
         }
     }
 }
