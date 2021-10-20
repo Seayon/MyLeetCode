@@ -49,7 +49,17 @@ public class MaxSubArray {
     }
 
     class Solution {
+        //动态规划
         public int maxSubArray(int[] nums) {
+            int pre = 0, maxAns = nums[0];
+            for (int x : nums) {
+                pre = Math.max(pre + x, x);
+                maxAns = Math.max(maxAns, pre);
+            }
+            return maxAns;
+        }
+        //贪心算法
+        public int maxSubArrayWy(int[] nums) {
             //其实是找最大的和,不是找数组的范围
             int res = nums[0];
             int sum = 0;
@@ -70,6 +80,8 @@ public class MaxSubArray {
             }
             return res;
         }
+
+
 
         public int maxSubArrayOld(int[] nums) {
             int end = nums.length;
