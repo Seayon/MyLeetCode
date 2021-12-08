@@ -52,8 +52,9 @@ public class RemoveDuplicates {
                     nums[r] = nums[i];
                 }
             }
-            return r+1;
+            return r + 1;
         }
+
         public int removeDuplicatesMy(int[] nums) {
             int startJ = 0;
             for (int i = 0; i < nums.length - 1; i++) {

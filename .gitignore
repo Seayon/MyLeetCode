@@ -25,3 +25,5 @@ hs_err_pid*
 
 *.iml
 .idea
+src/main/java/leetcode/editor/cn/doc/all.json
+src/main/java/leetcode/editor/cn/doc/translation.json

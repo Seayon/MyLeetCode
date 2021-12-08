@@ -45,7 +45,7 @@ public class MaxSubArray {
         assertEquals(0, solution.maxSubArray(new int[]{0}));
         assertEquals(-1, solution.maxSubArray(new int[]{-1}));
         assertEquals(-1000, solution.maxSubArray(new int[]{-1000}));
-        assertEquals(1001, solution.maxSubArray(new int[]{1,2,3,-100,1000,1}));
+        assertEquals(1001, solution.maxSubArray(new int[]{1, 2, 3, -100, 1000, 1}));
     }
 
     class Solution {
@@ -58,6 +58,7 @@ public class MaxSubArray {
             }
             return maxAns;
         }
+
         //贪心算法
         public int maxSubArrayWy(int[] nums) {
             //其实是找最大的和,不是找数组的范围
@@ -76,11 +77,10 @@ public class MaxSubArray {
                 } else {
                     sum = num;
                 }
-                res = Math.max(res,sum);
+                res = Math.max(res, sum);
             }
             return res;
         }
-
 
 
         public int maxSubArrayOld(int[] nums) {

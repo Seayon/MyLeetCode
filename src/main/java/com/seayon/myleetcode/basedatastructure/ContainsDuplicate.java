@@ -49,6 +49,7 @@ class ContainsDuplicate {
             ).map(Arguments::of);
         }
     }
+
     @Data
     @Getter
     @AllArgsConstructor
