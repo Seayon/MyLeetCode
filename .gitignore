@@ -27,3 +27,5 @@ hs_err_pid*
 .idea
 src/main/java/leetcode/editor/cn/doc/all.json
 src/main/java/leetcode/editor/cn/doc/translation.json
+src/main/java/leetcode/editor/cn/doc/content/*
+src/main/java/leetcode/editor/cn/doc/solution/*

@@ -109,7 +109,15 @@ public class MergeSortedArray {
             }
             int result[] = new int[m + n];
             int i = 0, j = 0, r = 0;
-            for (; i < m && j < n; r++) {
+            for (; i < m || j < n; r++) {
+                if (!(i < m)) {
+                    result[r] = nums2[j++];
+                    continue;
+                }
+                if (!(j < n)) {
+                    result[r] = nums1[i++];
+                    continue;
+                }
                 if (nums1[i] < nums2[j]) {
                     result[r] = nums1[i];
                     i++;
@@ -126,16 +134,6 @@ public class MergeSortedArray {
                     i++;
                     j++;
                     continue;
-                }
-            }
-            if (i < m) {
-                for (int k = i; k < m; k++, r++) {
-                    result[r] = nums1[k];
-                }
-            }
-            if (j < n) {
-                for (int k = j; k < n; k++, r++) {
-                    result[r] = nums2[k];
                 }
             }
             for (int k = 0; k < result.length; k++) {
