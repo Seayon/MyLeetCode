@@ -1,0 +1,96 @@
+//给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。
+//
+//
+//
+//
+//
+//
+// 示例 1：
+//
+//
+//输入：matrix = [[1,1,1],[1,0,1],[1,1,1]]
+//输出：[[1,0,1],[0,0,0],[1,0,1]]
+//
+//
+// 示例 2：
+//
+//
+//输入：matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+//输出：[[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+//
+//
+//
+//
+// 提示：
+//
+//
+// m == matrix.length
+// n == matrix[0].length
+// 1 <= m, n <= 200
+// -2³¹ <= matrix[i][j] <= 2³¹ - 1
+//
+//
+//
+//
+// 进阶：
+//
+//
+// 一个直观的解决方案是使用 O(mn) 的额外空间，但这并不是一个好的解决方案。
+// 一个简单的改进方案是使用 O(m + n) 的额外空间，但这仍然不是最好的解决方案。
+// 你能想出一个仅使用常量空间的解决方案吗？
+//
+// Related Topics 数组 哈希表 矩阵 👍 615 👎 0
+
+
+package leetcode.editor.cn;
+
+import org.junit.jupiter.api.Assertions;
+
+public class SetMatrixZeroes {
+    public static void main(String[] args) {
+        Solution solution = new SetMatrixZeroes().new Solution();
+        int[][] ints1 = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+        solution.setZeroes(ints1);
+        Assertions.assertArrayEquals(new int[][]{{1, 0, 1}, {0, 0, 0}, {1, 0, 1}}, ints1);
+        int[][] ints2 = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
+        solution.setZeroes(ints2);
+        Assertions.assertArrayEquals(new int[][]{{0, 0, 0, 0}, {0, 4, 5, 0}, {0, 3, 1, 0}}, ints2);
+
+        int[][] ints3 = {{0, 1}};
+        solution.setZeroes(ints3);
+        Assertions.assertArrayEquals(new int[][]{{0, 0}}, ints3);
+
+    }
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public void setZeroes(int[][] matrix) {
+            int startj = 0;
+            int[][] tmp = new int[matrix.length][matrix[0].length];
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = startj; j < matrix[i].length; j++) {
+                    if (0 == matrix[i][j]) {
+                        tmp[i][j] = 1;
+                    }
+                }
+            }
+            for (int i = 0; i < tmp.length; i++) {
+                for (int j = 0; j < tmp[i].length; j++) {
+                    if (1 == tmp[i][j]) {
+                        // 列的遍历设置为 0
+                        for (int k = 0; k < matrix.length; k++) {
+                            matrix[k][j] = 0;
+                        }
+                        // 行的遍历设置为 0
+                        for (int x = 0; x < matrix[i].length; x++) {
+                            matrix[i][x] = 0;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+//leetcode submit region end(Prohibit modification and deletion)
+
+}
