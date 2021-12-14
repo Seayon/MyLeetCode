@@ -55,15 +55,20 @@
 
 package leetcode.editor.cn;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import org.junit.jupiter.api.Assertions;
 
 public class LinkedListCycle {
     public static void main(String[] args) {
         Solution solution = new LinkedListCycle().new Solution();
-        int[] ints = {-21, 10, 17, 8, 4, 26, 5, 35, 33, -7, -16, 27, -12, 6, 29, -12, 5, 9, 20, 14, 14, 2, 13, -24, 21, 23, -21, 5};
-        Arrays.sort(ints);
-        System.out.println(Arrays.toString(ints));
+        ListNode listNode3 = new ListNode(3);
+        ListNode listNode2 = new ListNode(2);
+        ListNode listNode0 = new ListNode(0);
+        ListNode listNode_4 = new ListNode(-4);
+        listNode3.next = listNode2;
+        listNode2.next = listNode0;
+        listNode0.next = listNode_4;
+        listNode_4.next = null;
+        Assertions.assertEquals(true, solution.hasCycle(listNode3));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -83,14 +88,25 @@ public class LinkedListCycle {
             if (head == null) {
                 return false;
             }
-            HashSet<ListNode> hashSet = new HashSet<>();
-            while (head.next != null) {
-                if (hashSet.contains(head)) {
-                    return true;
+            ListNode current = head;
+            int runed = 1;
+            while (current.next != null) {
+                int index = 1;
+                while (head.next != null) {
+                    head = head.next;
+                    if (head == current) {
+                        return true;
+                    }
+                    if (index >= runed) {
+                        break;
+                    }
+                    index++;
                 }
-                hashSet.add(head);
-                head = head.next;
+                runed++;
+                head = current.next;
+                current = current.next;
             }
+
             return false;
         }
     }
