@@ -90,26 +90,19 @@ public class RemoveLinkedListElements {
      */
     class Solution {
         public ListNode removeElements(ListNode head, int val) {
-            if (head == null) {
-                return head;
-            }
-            while (head != null) {
-                if (head.val == val) {
-                    head = head.next;
+            //创建一个哑元节点,将它的下一个节点指向 head,一边从 head 开始遍历,使用这个哑元节点来一点点往后指
+            // dummy
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            ListNode tmp = dummy;
+            while (tmp.next != null) {
+                if (tmp.next.val == val) {
+                    tmp.next = tmp.next.next;
                 } else {
-                    break;
+                    tmp = tmp.next;
                 }
             }
-            ListNode start = head;
-            while (head != null) {
-                ListNode next = head.next;
-                if (next != null && next.val == val) {
-                    head.next = next.next;
-                } else {
-                    head = next;
-                }
-            }
-            return start.next;
+            return dummy.next;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
