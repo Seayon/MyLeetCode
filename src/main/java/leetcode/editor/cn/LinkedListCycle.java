@@ -68,6 +68,8 @@ public class LinkedListCycle {
         listNode2.next = listNode0;
         listNode0.next = listNode_4;
         listNode_4.next = null;
+        Assertions.assertEquals(false, solution.hasCycle(listNode3));
+        listNode_4.next = listNode_4;
         Assertions.assertEquals(true, solution.hasCycle(listNode3));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -85,26 +87,17 @@ public class LinkedListCycle {
      */
     public class Solution {
         public boolean hasCycle(ListNode head) {
-            if (head == null) {
+            if (head == null || head.next == null) {
                 return false;
             }
-            ListNode current = head;
-            int runed = 1;
-            while (current.next != null) {
-                int index = 1;
-                while (head.next != null) {
-                    head = head.next;
-                    if (head == current) {
-                        return true;
-                    }
-                    if (index >= runed) {
-                        break;
-                    }
-                    index++;
+            ListNode fast = head;
+            ListNode slow = head;
+            while (slow.next != null && fast.next != null && fast.next.next != null && fast.next.next != null) {
+                fast = fast.next.next;
+                slow = slow.next;
+                if (fast == slow) {
+                    return true;
                 }
-                runed++;
-                head = current.next;
-                current = current.next;
             }
 
             return false;
