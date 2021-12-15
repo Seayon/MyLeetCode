@@ -44,10 +44,10 @@ public class MyLeetCodeUtil {
         StringBuilder stringBuilder = new StringBuilder();
         while (listNode != null) {
             stringBuilder.append(listNode.val);
-            stringBuilder.append(",");
+            stringBuilder.append(" -> ");
             listNode = listNode.next;
         }
-        int i = stringBuilder.lastIndexOf(",");
+        int i = stringBuilder.lastIndexOf(" -> ");
         stringBuilder.replace(i, stringBuilder.length(), "");
         System.out.println("ListNode: " + new String(stringBuilder));
     }

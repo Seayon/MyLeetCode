@@ -43,8 +43,6 @@
 
 package leetcode.editor.cn;
 
-import java.util.Stack;
-
 public class ReverseLinkedList {
     public static void main(String[] args) {
         Solution solution = new ReverseLinkedList().new Solution();
@@ -67,23 +65,20 @@ public class ReverseLinkedList {
      */
     class Solution {
         public ListNode reverseList(ListNode head) {
-            if (head == null) {
-                return null;
+            // 前一个节点
+            ListNode prev = null;
+            ListNode current = head;
+            while (current != null) {
+                // 暂存记录下来下个节点在哪里
+                ListNode tmp = current.next;
+                // 把当前节点指向前驱节点
+                current.next = prev;
+                // 当前节点设置为前驱节点
+                prev = current;
+                // 当前节点指向下一个节点,由于刚才上面暂存了,所以可以找到
+                current = tmp;
             }
-            Stack<ListNode> stack = new Stack<>();
-            while (head != null) {
-                ListNode tmp = head;
-                head = head.next;
-                tmp.next = null;
-                stack.push(tmp);
-            }
-            head = stack.pop();
-            ListNode first = head;
-            while (!stack.empty()) {
-                head.next = stack.pop();
-                head = head.next;
-            }
-            return first;
+            return prev;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
