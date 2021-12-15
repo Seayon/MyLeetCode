@@ -18,6 +18,20 @@ public class MyLeetCodeUtil {
         return new ListNode(3);
     }
 
+    public static ListNode createListNodeByArray(int[] ints) {
+        if (ints == null || ints.length == 0) {
+            return null;
+        }
+        ListNode listNode = new ListNode(ints[0]);
+        ListNode tmp = listNode;
+        for (int i = 1; i < ints.length; i++) {
+            int anInt = ints[i];
+            ListNode newNode = new ListNode(anInt);
+            tmp.next = newNode;
+            tmp = tmp.next;
+        }
+        return listNode;
+    }
     public static ListNode createSimpleListNode() {
         ListNode listNode1 = new ListNode(1);
         ListNode listNode2 = new ListNode(2);
