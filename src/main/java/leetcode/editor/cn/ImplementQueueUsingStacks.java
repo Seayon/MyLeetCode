@@ -85,7 +85,9 @@ public class ImplementQueueUsingStacks {
         myQueue.push(6);
         myQueue.push(7);
         myQueue.push(8);
-        Assertions.assertEquals(3, myQueue.peek());
+        Assertions.assertEquals(3, myQueue.pop());
+        myQueue.push(9);
+        Assertions.assertEquals(4, myQueue.pop());
 
     }
 
@@ -94,34 +96,38 @@ public class ImplementQueueUsingStacks {
     class MyQueue {
         Stack<Integer> stack1 = new Stack<>();
         Stack<Integer> stack2 = new Stack<>();
+        int front;
 
         public MyQueue() {
 
         }
 
         public void push(int x) {
-            // 先把 1 的都倒到 2 中
-            while (!stack1.empty()) {
-                stack2.push(stack1.pop());
+
+            if (stack1.empty()) {
+                front = x;
             }
-            // 然后把当前这个值放入 1 的底部,因为 1 都空了
             stack1.push(x);
-            //然后再把 2 里面的倒回来
-            while (!stack2.empty()) {
-                stack1.push(stack2.pop());
-            }
         }
 
         public int pop() {
-            return stack1.pop();
+            // 如果 2 不为空,直接从 2 中拿
+            if (!stack2.empty()) {
+                return stack2.pop();
+            } else {
+                while (!stack1.empty()) {
+                    stack2.push(stack1.pop());
+                }
+                return stack2.pop();
+            }
         }
 
         public int peek() {
-            return stack1.peek();
+            return stack2.empty() ? front : stack2.peek();
         }
 
         public boolean empty() {
-            return stack1.empty();
+            return stack1.empty() && stack2.empty();
         }
     }
 
