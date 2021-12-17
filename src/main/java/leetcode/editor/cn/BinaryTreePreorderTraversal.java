@@ -56,10 +56,20 @@ package leetcode.editor.cn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class BinaryTreePreorderTraversal {
     public static void main(String[] args) {
         Solution solution = new BinaryTreePreorderTraversal().new Solution();
+
+        TreeNode treeNode1 = new TreeNode(1, new TreeNode(2,
+                new TreeNode(4, new TreeNode(3, new TreeNode(6), null), null), null),
+                new TreeNode(5, null, new TreeNode(7)));
+        List<Integer> integers = solution.preorderTraversal(treeNode1);
+        integers.forEach(integer -> {
+            System.out.print(integer + "->");
+        });
+        //    1->2->4->3->6->5->7->
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -86,12 +96,17 @@ public class BinaryTreePreorderTraversal {
             if (root == null) {
                 return new ArrayList<>();
             }
-            result.add(root.val);
-            if (root.left != null) {
-                preorderTraversal(root.left);
-            }
-            if (root.right != null) {
-                preorderTraversal(root.right);
+            Stack<TreeNode> stack = new Stack<>();
+            stack.push(root);
+            while (!stack.empty()) {
+                TreeNode pop = stack.pop();
+                result.add(pop.val);
+                if (pop.right != null) {
+                    stack.push(pop.right);
+                }
+                if (pop.left != null) {
+                    stack.push(pop.left);
+                }
             }
             return result;
         }
