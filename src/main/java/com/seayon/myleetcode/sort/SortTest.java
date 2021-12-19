@@ -52,6 +52,12 @@ public class SortTest {
         testSort(new ShellSort());
     }
 
+    @Test
+    @DisplayName("归并排序")
+    public void testMergeSort() {
+        testSort(new MergeSort());
+    }
+
 
     public void testSort(MySort mySort) {
         System.out.println("开始执行: " + System.currentTimeMillis());
