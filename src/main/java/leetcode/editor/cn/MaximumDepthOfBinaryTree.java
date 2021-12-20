@@ -21,16 +21,13 @@ package leetcode.editor.cn;
 
 import org.junit.jupiter.api.Assertions;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 public class MaximumDepthOfBinaryTree {
     public static void main(String[] args) {
         Solution solution = new MaximumDepthOfBinaryTree().new Solution();
         TreeNode treeNode1 = new TreeNode(1, new TreeNode(2,
                 new TreeNode(4, null, null), new TreeNode(3, new TreeNode(6), null)),
                 new TreeNode(5, null, new TreeNode(7)));
-        Assertions.assertEquals(4,solution.maxDepth(treeNode1));
+        Assertions.assertEquals(4, solution.maxDepth(treeNode1));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -54,25 +51,9 @@ public class MaximumDepthOfBinaryTree {
             if (root == null) {
                 return 0;
             }
-            Deque<TreeNode> tmp = new LinkedList<TreeNode>() {{
-                offer(root);
-            }};
-            int maxDeepSize = 0;
-            while (!tmp.isEmpty()) {
-                Deque<TreeNode> tmp1 = new LinkedList<>();
-                maxDeepSize++;
-                while (!tmp.isEmpty()) {
-                    TreeNode poll = tmp.poll();
-                    if (poll.left != null) {
-                        tmp1.offer(poll.left);
-                    }
-                    if (poll.right != null) {
-                        tmp1.offer(poll.right);
-                    }
-                }
-                tmp = tmp1;
-            }
-            return maxDeepSize;
+            int left = maxDepth(root.left);
+            int right = maxDepth(root.right);
+            return Math.max(left, right) + 1;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
