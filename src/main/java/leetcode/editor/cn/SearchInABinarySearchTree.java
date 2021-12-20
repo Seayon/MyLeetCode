@@ -38,7 +38,7 @@ public class SearchInABinarySearchTree {
                 new TreeNode(4, null, null), new TreeNode(3, new TreeNode(6), null)),
                 new TreeNode(5, null, new TreeNode(7)));
 
-        Assertions.assertEquals(2,solution.searchBST(treeNode1, 2).val);
+        Assertions.assertEquals(2, solution.searchBST(treeNode1, 2).val);
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -59,17 +59,17 @@ public class SearchInABinarySearchTree {
      */
     class Solution {
         public TreeNode searchBST(TreeNode root, int val) {
-            if (root == null) {
-                return null;
+            while (root != null) {
+                if (val == root.val) {
+                    return root;
+                }
+                if (val > root.val) {
+                    root = root.right;
+                } else if (val < root.val) {
+                    root = root.left;
+                }
             }
-
-            if (val > root.val) {
-                return searchBST(root.right, val);
-            }
-            if (val < root.val) {
-                return searchBST(root.left, val);
-            }
-            return root;
+            return null;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
