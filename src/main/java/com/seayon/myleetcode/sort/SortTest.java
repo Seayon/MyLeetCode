@@ -58,6 +58,12 @@ public class SortTest {
         testSort(new MergeSort());
     }
 
+    @Test
+    @DisplayName("快速排序")
+    public void testQuickSOrt() {
+        testSort(new QuickSort());
+    }
+
 
     public void testSort(MySort mySort) {
         System.out.println("开始执行: " + System.currentTimeMillis());
@@ -75,9 +81,10 @@ public class SortTest {
         check(mySort.sort(new int[]{98, 2, 1, 1, 2}));
 
         Random random = new Random();
-        int[] integers = new int[10000];
-        for (int i = 0; i < 1000; i++) {
-            integers[i] = random.nextInt(1000);
+        int count = 100000;
+        int[] integers = new int[count];
+        for (int i = 0; i < count; i++) {
+            integers[i] = random.nextInt(count);
         }
         check(mySort.sort(integers));
         System.out.println("结束执行: " + System.currentTimeMillis());

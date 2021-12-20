@@ -16,16 +16,34 @@ public class QuickSort implements MySort {
         if (array == null) {
             return null;
         }
-        int pivot = array[0];
-        for (int j = 0, i = array.length; j < i; j++, i--) {
-            if (array[i] < pivot) {
-                swap(array, i, j);
-                pivot = array[i];
-            }
-            if (array[j] > pivot) {
-                swap(array, j, i);
-            }
-        }
-        return new int[0];
+        return quickSort(array, 0, array.length - 1);
     }
+
+    private int[] quickSort(int[] array, int leftStart, int rightEnd) {
+        if (leftStart < rightEnd) {
+            int pivot = array[leftStart];
+            int i = leftStart;
+            int j = rightEnd;
+            while (i < j) {
+                while (i < j && array[j] >= pivot) {
+                    j--;
+                }
+                if (i < j) {
+                    swap(array, i, j);
+                    i++;
+                }
+                while (i < j && array[i] <= pivot) {
+                    i++;
+                }
+                if (i < j) {
+                    swap(array, i, j);
+                    j--;
+                }
+            }
+            quickSort(array, leftStart, i - 1);
+            quickSort(array, i + 1, rightEnd);
+        }
+        return array;
+    }
+
 }
