@@ -12,9 +12,9 @@ package com.seayon.myleetcode.sort;
 public interface MySort {
     public int[] sort(int[] array);
 
-    default void swap(int[] array,int a, int b) {
-        int tmp = array[a];
-        array[a] = array[b];
-        array[b] = tmp;
+    default void swap(int[] array,int i, int j) {
+        int tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
     }
 }
