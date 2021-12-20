@@ -34,6 +34,9 @@ package leetcode.editor.cn;
 
 import org.junit.jupiter.api.Assertions;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class SymmetricTree {
     public static void main(String[] args) {
         Solution solution = new SymmetricTree().new Solution();
@@ -80,17 +83,27 @@ public class SymmetricTree {
             if (root == null) {
                 return true;
             }
-            return check(root, root);
-        }
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            queue.offer(root);
 
-        public boolean check(TreeNode left, TreeNode right) {
-            if (left == null && right == null) {
-                return true;
+            while (!queue.isEmpty()) {
+                TreeNode poll1 = queue.poll();
+                TreeNode poll2 = queue.poll();
+                if (poll1 == null && poll2 == null) {
+                    continue;
+                }
+                if ((poll1 == null ^ poll2 == null) || poll1.val != poll2.val) {
+                    return false;
+                }
+                queue.offer(poll1.left);
+                queue.offer(poll2.right);
+
+                queue.offer(poll1.right);
+                queue.offer(poll2.left);
             }
-            if (left == null ^ right == null) {
-                return false;
-            }
-            return left.val == right.val && check(left.left, right.right) && check(left.right, right.left);
+            return true;
+
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
