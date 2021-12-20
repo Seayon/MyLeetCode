@@ -64,6 +64,13 @@ public class SortTest {
         testSort(new QuickSort());
     }
 
+    @Test
+    @DisplayName("计数排序")
+    public void testCountingSort() {
+        testSort(new CountingSort());
+    }
+
+
 
     public void testSort(MySort mySort) {
         System.out.println("开始执行: " + System.currentTimeMillis());
@@ -81,7 +88,7 @@ public class SortTest {
         check(mySort.sort(new int[]{98, 2, 1, 1, 2}));
 
         Random random = new Random();
-        int count = 100000;
+        int count = 10000;
         int[] integers = new int[count];
         for (int i = 0; i < count; i++) {
             integers[i] = random.nextInt(count);
@@ -92,6 +99,9 @@ public class SortTest {
 
     @DisplayName("检查有序")
     public void check(int[] ints) {
+        if (ints == null || ints.length == 0) {
+            return;
+        }
         for (int i = 0; i < ints.length - 1; i++) {
             if (ints[i] > ints[i + 1]) {
                 System.out.println(Arrays.toString(ints) + ",");
