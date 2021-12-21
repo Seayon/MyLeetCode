@@ -54,7 +54,6 @@ package leetcode.editor.cn;
 
 import org.junit.jupiter.api.Assertions;
 
-import java.util.HashSet;
 import java.util.Stack;
 
 public class TwoSumIvInputIsABst {
@@ -99,7 +98,7 @@ public class TwoSumIvInputIsABst {
     class Solution {
         public boolean findTarget(TreeNode root, int k) {
             // 用任意一种方式去遍历所有节点,然后用这个节点的值去整个树上找差值,并且这个差值不能是当前的节点
-        //    这里复习一下刚刚练习的深度优先遍历
+            //    这里复习一下刚刚练习的深度优先遍历
             Stack<TreeNode> stack = new Stack<>();
             stack.push(root);
             while (!stack.isEmpty()) {
@@ -132,6 +131,23 @@ public class TwoSumIvInputIsABst {
                 }
             }
             return null;
+        }
+
+        //BST 查找的递归写法
+        public TreeNode findKeyInBSTR(TreeNode root, int k) {
+            if (root == null) {
+                return null;
+            }
+            if (root.val == k) {
+                return root;
+            }
+            if (root.val > k) {
+                root = root.left;
+                return findKeyInBSTR(root, k);
+            } else {
+                root = root.right;
+                return findKeyInBSTR(root, k);
+            }
         }
 
 

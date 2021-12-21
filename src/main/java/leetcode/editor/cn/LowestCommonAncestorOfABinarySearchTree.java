@@ -36,9 +36,6 @@
 package leetcode.editor.cn;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
 public class LowestCommonAncestorOfABinarySearchTree {
     public static void main(String[] args) {
@@ -58,56 +55,31 @@ public class LowestCommonAncestorOfABinarySearchTree {
 
     class Solution {
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-            //用广度优先方式遍历二叉树,检查这个节点能否到达输入的 p 和 q 节点(或者等于节点本身),能到达的话即为一个祖先
-            //然后遍历下一层,如果下一层还能找到,就用下一层的,因为下一层更近
-            ArrayList<List<TreeNode>> list = new ArrayList<>();
-            Queue<TreeNode> current = new LinkedList<>();
-            current.offer(root);
-            while (!current.isEmpty()) {
-                Queue<TreeNode> tmp = new LinkedList<>();
-                List<TreeNode> currentLevelNodes = new ArrayList<>();
-                // 如果队列中还有数据
-                while (!current.isEmpty()) {
-                    // 就循环全部取出存储到当前这一层的集合中
-                    TreeNode poll = current.poll();
-                    currentLevelNodes.add(poll);
-                    //并且顺道把下一层的节点都存储到临时的队列中
-                    if (poll.left != null) {
-                        tmp.add(poll.left);
-                    }
-                    if (poll.right != null) {
-                        tmp.add(poll.right);
-                    }
-                }
-                //存储这一层的数据
-                list.add(currentLevelNodes);
-                //等到循环完了集合中没有数据了,将当前集合的引用指向下一层集合
-                current = tmp;
-            }
-            //遍历完以后,倒序遍历结果集合,从最低的一层开始找,尝试在这可树上找到目标值,如果都能找到,则是最近的公共祖先
-            boolean finded = false;
-            TreeNode result = null;
-            for (int i = list.size() - 1; i >= 0 && !finded; i--) {
-                List<TreeNode> treeNodes = list.get(i);
-                for (TreeNode treeNode : treeNodes) {
-                    if (findKeyInBST(treeNode, p) != null && findKeyInBST(treeNode, q) != null) {
-                        finded = true;
-                        result = treeNode;
-                        break;
-                    }
+            ArrayList<TreeNode> keyInBSTP = findKeyInBST(root, p);
+            ArrayList<TreeNode> keyInBSTQ = findKeyInBST(root, q);
+            int maxIndex = keyInBSTP.size() > keyInBSTQ.size() ? keyInBSTQ.size() : keyInBSTP.size();
+            for (int index = maxIndex - 1; index >= 0; index--) {
+                TreeNode treeNodeP = keyInBSTP.get(index);
+                TreeNode treeNodeQ = keyInBSTQ.get(index);
+                if (treeNodeP == treeNodeQ) {
+                    return treeNodeP;
                 }
             }
-            return result;
+            return null;
         }
 
-        public TreeNode findKeyInBST(TreeNode root, TreeNode k) {
+        public ArrayList<TreeNode> findKeyInBST(TreeNode root, TreeNode k) {
+            ArrayList<TreeNode> path = new ArrayList<>();
             while (root != null) {
                 if (root == k) {
-                    return root;
+                    path.add(root);
+                    return path;
                 }
                 if (root.val > k.val) {
+                    path.add(root.left);
                     root = root.left;
                 } else if (root.val < k.val) {
+                    path.add(root.right);
                     root = root.right;
                 }
             }
