@@ -35,11 +35,19 @@
 
 package leetcode.editor.cn;
 
+import org.junit.jupiter.api.Assertions;
+
 import java.util.ArrayList;
 
 public class LowestCommonAncestorOfABinarySearchTree {
     public static void main(String[] args) {
         Solution solution = new LowestCommonAncestorOfABinarySearchTree().new Solution();
+        TreeNode left = new TreeNode(1, null, null);
+        TreeNode right = new TreeNode(3, null, null);
+        TreeNode treeNode123 = new TreeNode(2, left, right);
+
+        Assertions.assertEquals(2,solution.lowestCommonAncestor(treeNode123, left, right).val);
+
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -71,15 +79,13 @@ public class LowestCommonAncestorOfABinarySearchTree {
         public ArrayList<TreeNode> findKeyInBST(TreeNode root, TreeNode k) {
             ArrayList<TreeNode> path = new ArrayList<>();
             while (root != null) {
+                path.add(root);
                 if (root == k) {
-                    path.add(root);
                     return path;
                 }
                 if (root.val > k.val) {
-                    path.add(root.left);
                     root = root.left;
                 } else if (root.val < k.val) {
-                    path.add(root.right);
                     root = root.right;
                 }
             }

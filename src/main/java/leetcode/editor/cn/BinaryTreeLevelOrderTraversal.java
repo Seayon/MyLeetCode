@@ -35,26 +35,52 @@ public class BinaryTreeLevelOrderTraversal {
         TreeNode treeNode1 = new TreeNode(1, new TreeNode(2,
                 new TreeNode(4, null, null), new TreeNode(3, new TreeNode(6), null)),
                 new TreeNode(5, null, new TreeNode(7)));
-        solution.levelOrder(treeNode1);
+        List<List<Integer>> lists = solution.levelOrder(treeNode1);
+        printResult(lists);
 
-       /* Integer[] a =  {6,2,8,0,4,7,9,null,null,3,5};
 
-        Queue<TreeNode> a = new LinkedList<>();
-        Queue<TreeNode> currentLevel = new LinkedList<>();
+        Integer[] a = {6, 2, 8, 0, 4, 7, 9, null, null, 3, 5};
         Queue<TreeNode> nodes = new LinkedList<>();
-        currentLevel.add(new TreeNode(a[0], null, null));
-        for (int i = 1; i < a.length; i++) {
-        //    存储当前层的所有节点的队列
-            while (!currentLevel.isEmpty()) {
-                TreeNode poll = currentLevel.poll();
-                TreeNode poll1 = nodes.poll();
-                if (poll1 != null) {
-                    poll.left = poll1;
-                }
+        for (Integer integer : a) {
+            if (integer == null) {
+                nodes.add(null);
+            } else {
+                nodes.add(new TreeNode(integer, null, null));
             }
-        }*/
+        }
+        Queue<TreeNode> currentLevel = new LinkedList<>();
+        TreeNode e = new TreeNode(a[0], null, null);
+        currentLevel.add(e);
+
+        //    存储当前层的所有节点的队列
+        while (!currentLevel.isEmpty()) {
+            TreeNode poll = currentLevel.poll();
+            TreeNode integerLeft = nodes.poll();
+            if (integerLeft != null) {
+                poll.left = integerLeft;
+                currentLevel.add(integerLeft);
+            }
+
+            TreeNode integerRight = nodes.poll();
+            if (integerRight != null) {
+                poll.right = integerRight;
+                currentLevel.add(integerRight);
+            }
+        }
+
+        printResult(solution.levelOrder(e));
 
 
+    }
+
+    private static void printResult(List<List<Integer>> lists) {
+        System.out.println("lists = " + lists);
+        for (List<Integer> integers : lists) {
+            for (Integer integer : integers) {
+                System.out.print(integer + ",");
+            }
+            System.out.println("");
+        }
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
