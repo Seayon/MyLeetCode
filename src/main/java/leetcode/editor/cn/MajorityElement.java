@@ -31,6 +31,7 @@ package leetcode.editor.cn;
 
 import org.junit.jupiter.api.Assertions;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,19 +45,8 @@ public class MajorityElement {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int majorityElement(int[] nums) {
-            Map<Integer, Integer> map = new HashMap<>();
-            for (int num : nums) {
-                if (map.containsKey(num)) {
-                    int value = map.get(num) + 1;
-                    if (value > nums.length / 2) {
-                        return num;
-                    }
-                    map.put(num, value);
-                } else {
-                    map.put(num, 1);
-                }
-            }
-            return nums[0];
+            Arrays.sort(nums);
+            return nums[nums.length / 2];
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
