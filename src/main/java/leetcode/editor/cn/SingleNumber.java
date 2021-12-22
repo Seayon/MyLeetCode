@@ -36,15 +36,11 @@ public class SingleNumber {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int singleNumber(int[] nums) {
-            HashSet<Integer> hashSet = new LinkedHashSet<>();
-            for (int num : nums) {
-                if (hashSet.contains(num)) {
-                    hashSet.remove(num);
-                } else {
-                    hashSet.add(num);
-                }
+            int a = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                a ^= nums[i];
             }
-            return hashSet.iterator().next();
+            return a;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
