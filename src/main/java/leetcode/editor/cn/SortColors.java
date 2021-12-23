@@ -60,9 +60,6 @@ package leetcode.editor.cn;
 
 import org.junit.jupiter.api.Assertions;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
 /**
  * 输入：nums = [2,0,2,1,1,0]
  * 输出：[0,0,1,1,2,2]
@@ -90,22 +87,25 @@ public class SortColors {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public void sortColors(int[] nums) {
-            HashMap<Integer, Integer> map = new HashMap<>();
+            //第一次遍历,将数组所有的 0 都交换到头部
+            int ptr = 0;
             for (int i = 0; i < nums.length; i++) {
-                if (map.containsKey(nums[i])) {
-                    map.put(nums[i], map.get(nums[i]) + 1);
-                } else {
-                    map.put(nums[i], 1);
+                // 如果遍历到的这个值为 0,则需要将这个值交换到 ptr 所在的位置上
+                if (nums[i] == 0) {
+                    int tmp = nums[i];
+                    nums[i] = nums[ptr];
+                    nums[ptr] = tmp;
+                    ptr++;
                 }
             }
-            int j = 0;
-            Iterator<Integer> iterator = map.keySet().iterator();
-            while (iterator.hasNext()) {
-                Integer next = iterator.next();
-                while (map.get(next) != 0) {
-                    nums[j] = next;
-                    map.put(next, map.get(next) - 1);
-                    j++;
+            //第二次遍历,需要将 1 都交换到 ptr 开始的头部的范围
+            for (int i = ptr; i < nums.length; i++) {
+                // 如果遍历到的这个值为 0,则需要将这个值交换到 ptr 所在的位置上
+                if (nums[i] == 1) {
+                    int tmp = nums[i];
+                    nums[i] = nums[ptr];
+                    nums[ptr] = tmp;
+                    ptr++;
                 }
             }
         }
