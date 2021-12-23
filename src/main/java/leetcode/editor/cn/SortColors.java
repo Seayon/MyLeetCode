@@ -82,31 +82,53 @@ public class SortColors {
         int[] nums = {2, 0, 2, 1, 1, 0};
         solution.sortColors(nums);
         Assertions.assertArrayEquals(new int[]{0, 0, 1, 1, 2, 2}, nums);
+
+        int[] nums1 = {2, 0, 1};
+        solution.sortColors(nums1);
+        Assertions.assertArrayEquals(new int[]{0,1,2}, nums1);
+
+        int[] nums2 = {0};
+        solution.sortColors(nums2);
+        Assertions.assertArrayEquals(new int[]{0}, nums2);
+
+        int[] nums0 = {1};
+        solution.sortColors(nums0);
+        Assertions.assertArrayEquals(new int[]{1}, nums0);
+
+
+
+
+
+
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public void sortColors(int[] nums) {
             //第一次遍历,将数组所有的 0 都交换到头部
-            int ptr = 0;
+            int ptr0 = 0;
+            int ptr1 = 0;
             for (int i = 0; i < nums.length; i++) {
-                // 如果遍历到的这个值为 0,则需要将这个值交换到 ptr 所在的位置上
-                if (nums[i] == 0) {
-                    int tmp = nums[i];
-                    nums[i] = nums[ptr];
-                    nums[ptr] = tmp;
-                    ptr++;
+                int current = nums[i];
+                if (current == 0) {
+                    //    检查 tmp0 往后换的过程中,是否存在 ptr1 在其后面,如果在的话,换 ptr1 的位置,让 ptr1 去填补本来 tmp0 要去的位置
+                    if (ptr0 < ptr1) {
+                        nums[i] = nums[ptr1];
+                        nums[ptr1] = nums[ptr0];
+                        nums[ptr0] = current;
+                    } else {
+                        nums[i] = nums[ptr0];
+                        nums[ptr0] = current;
+                    }
+                    ptr1++;
+                    ptr0++;
                 }
-            }
-            //第二次遍历,需要将 1 都交换到 ptr 开始的头部的范围
-            for (int i = ptr; i < nums.length; i++) {
-                // 如果遍历到的这个值为 0,则需要将这个值交换到 ptr 所在的位置上
-                if (nums[i] == 1) {
-                    int tmp = nums[i];
-                    nums[i] = nums[ptr];
-                    nums[ptr] = tmp;
-                    ptr++;
+                if (current == 1) {
+                    nums[i] = nums[ptr1];
+                    nums[ptr1] = current;
+                    ptr1++;
                 }
+
             }
         }
     }
