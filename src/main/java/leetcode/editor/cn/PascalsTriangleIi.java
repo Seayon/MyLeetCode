@@ -59,18 +59,15 @@ public class PascalsTriangleIi {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public List<Integer> getRow(int rowIndex) {
-            Integer[] result = new Integer[1];
-
-            int i = 0;
-            while (i < rowIndex + 1) {
-
-                Integer[] tmp = new Integer[i + 1];
-                tmp[0] = 1;
-                tmp[i] = 1;
-                for (int j = 1; j < i; j++) {
-                    tmp[j] = result[j - 1] + result[j];
+            Integer[] result = new Integer[rowIndex + 1];
+            result[0] = 1;
+            result[rowIndex] = 1;
+            int i = 1;
+            while (i <= rowIndex) {
+                result[i] = 0;
+                for (int j = i; j > 0; j--) {
+                    result[j] = result[j - 1] + result[j];
                 }
-                result = tmp;
                 i++;
             }
             return Arrays.stream(result).collect(Collectors.toList());
