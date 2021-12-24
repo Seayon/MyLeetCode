@@ -51,16 +51,19 @@ public class MergeIntervals {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[][] merge(int[][] intervals) {
-            List<Integer[]> list = new LinkedList<>();
-            for (int i = 0; i < intervals.length; i++) {
-                list.add(new Integer[]{intervals[i][0], intervals[i][1]});
-            }
-            Collections.sort(list, Comparator.comparing(o -> o[0]));
 
+            // 直接排序
+            Arrays.sort(intervals, Comparator.comparing(o -> o[0]));
+
+            List<int[]> list = new ArrayList<>();
+            for (int i = 0; i < intervals.length; i++) {
+                list.add(new int[]{intervals[i][0], intervals[i][1]});
+            }
+            //TODO 这下面的实现可以有进一步优化空间的
             for (int i = 0; i < list.size() - 1; i++) {
-                Integer[] prev = list.get(i);
-                Integer[] next = list.get(i + 1);
-                Integer[] result = new Integer[2];
+                int[] prev = list.get(i);
+                int[] next = list.get(i + 1);
+                int[] result = new int[2];
                 if (prev[1] >= next[0]) {
                     result[0] = prev[0];
                     result[1] = Math.max(prev[1], next[1]);
@@ -69,13 +72,7 @@ public class MergeIntervals {
                     i--;
                 }
             }
-            int[][] r = new int[list.size()][2];
-            int j = 0;
-            for (Integer[] integers : list) {
-                r[j] = new int[]{integers[0], integers[1]};
-                j++;
-            }
-            return r;
+            return list.toArray(new int[list.size()][]);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
