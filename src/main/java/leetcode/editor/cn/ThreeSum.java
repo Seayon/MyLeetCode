@@ -39,13 +39,15 @@
 
 package leetcode.editor.cn;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ThreeSum {
     public static void main(String[] args) {
         Solution solution = new ThreeSum().new Solution();
-        List<List<Integer>> lists = solution.threeSum(new int[]{-1, 0, 1, 2, -1, -4});
+        System.out.println(Arrays.deepToString(solution.threeSum(new int[]{-1, 0, 1, 2, -1, -4}).toArray()));
+        System.out.println(Arrays.deepToString(solution.threeSum(new int[]{0, 0, 0, 0}).toArray()));
         solution.threeSum(new int[]{});
         solution.threeSum(new int[]{0});
 
@@ -55,47 +57,43 @@ public class ThreeSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public List<List<Integer>> threeSum(int[] nums) {
-            HashMap<Integer, Integer> map = new HashMap<>();
+            List<List<Integer>> result = new ArrayList<>();
+            // 先排序升序
+            Arrays.sort(nums);
+            //最外层正常遍历即可
             for (int i = 0; i < nums.length; i++) {
-                if (map.containsKey(nums[i])) {
-                    map.put(nums[i], map.get(nums[i]) + 1);
-                } else {
-                    map.put(nums[i], 1);
+                //只有和上一次不同的元素才进行枚举
+                if (i > 0 && nums[i] == nums[i - 1]) {
+                    continue;
                 }
-            }
-            HashSet<String> resultStr = new HashSet<>();
-            for (int i = 0; i < nums.length; i++) {
-                int first = nums[i];
-                //将第一个数字的数量减 1,表示已经用去一个
-                map.put(nums[i], map.get(nums[i]) - 1);
-                //依次寻找一个还能用的数字
-                for (int j = 0; j < nums.length; j++) {
-                    if (map.get(nums[j]) != 0) {
-                        int seconds = nums[j];
-                        //也减去一个量
-                        map.put(nums[j], map.get(nums[j]) - 1);
-                        //判断剩下的缺的数字,还有没有一个数字等于这个数字且有可用的量
-                        int left = 0 - first - seconds;
-                        if (map.containsKey(left) && map.get(left) != 0) {
-                            int[] ints = {first, seconds, left};
-                            Arrays.sort(ints);
-                            resultStr.add(Arrays.stream(ints).boxed().map(operand -> String.valueOf(operand)).collect(Collectors.joining(",")));
-                        }
-                        map.put(nums[j], map.get(nums[j]) + 1);
+                //    第二层找一个不小于最外层元素的值开始遍历,从左往右遍历
+                for (int j = i + 1; j < nums.length; j++) {
+                    // 只有和上一次不同的才枚举
+                    if (j > i + 1 && nums[j] == nums[j - 1]) {
+                        continue;
+                    }
+                    //    第三层,从右往左遍历
+                    int k = nums.length - 1;
+                    while (j < k && nums[j] + nums[k] > 0 - nums[i]) {
+                        k--;
+                    }
+                    if (j == k) {
+                        break;
+                    }
+
+                    if (nums[i] + nums[j] + nums[k] == 0) {
+                        int finalI = i;
+                        int finalJ = j;
+                        int finalK = k;
+                        result.add(new ArrayList<Integer>() {{
+                            add(nums[finalI]);
+                            add(nums[finalJ]);
+                            add(nums[finalK]);
+                        }});
                     }
                 }
-                map.put(nums[i], map.get(nums[i]) + 1);
             }
-            return resultStr.stream().map(s -> {
-                String[] split = s.split(",");
-                return new ArrayList<Integer>() {
-                    {
-                        add(Integer.parseInt(split[0]));
-                        add(Integer.parseInt(split[1]));
-                        add(Integer.parseInt(split[2]));
-                    }
-                };
-            }).collect(Collectors.toList());
+            return result;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
