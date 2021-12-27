@@ -48,6 +48,9 @@ package leetcode.editor.cn;
 
 import org.junit.jupiter.api.Assertions;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 public class DesignHashmap {
     public static void main(String[] args) {
         MyHashMap myHashMap = new DesignHashmap().new MyHashMap();
@@ -108,105 +111,84 @@ public class DesignHashmap {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class MyHashMap {
+        private class Pair {
+            private int key;
+            private int value;
 
-        private Node[] r = new Node[4096];
-
-        public MyHashMap() {
-        }
-
-        public void put(int key, int value) {
-            int index = computeIndex(key);
-            if (r[index] == null) {
-                r[index] = new Node(key, value);
-                return;
-            }
-            // 如果当前这个 key 已经有了内容,且 key 的值等于本次传入的值,就覆盖一下 value 值
-            if (r[index].key == key) {
-                r[index].value = value;
-                return;
-            }
-            //    否则的话,就是这个 index 已经有内容,但是内容的 key 和传入的不一致,只不过 hash 算出来的位置一致,这种情况下把他通过链表连接到后面,中间如果遇到 key 一致的,要替换一下
-            Node tmp = r[index];
-            while (tmp.next != null) {
-                //如果发现有 key 一样的,就替换一下 value,然后直接返回不再进行其他处理
-                if (tmp.key == key) {
-                    tmp.value = value;
-                    return;
-                }
-                tmp = tmp.next;
-
-            }
-            tmp.next = new Node(key, value);
-        }
-
-        public int get(int key) {
-            int index = computeIndex(key);
-            Node node = r[index];
-            while (node != null && node.next != null) {
-                if (node.key == key) {
-                    //找到一样的就返回
-                    return node.value;
-                } else {
-                    node = node.next;
-                }
-            }
-            if (node == null) {
-                return -1;
-            }
-            if (node.key != key) {
-                return -1;
-            }
-            return node.value;
-        }
-
-        public void remove(int key) {
-            int index = computeIndex(key);
-            Node node = r[index];
-            if (node == null) {
-                return;
-            }
-            if (node != null && node.key == key) {
-                r[index] = node.next;
-                return;
-            }
-            Node prev = node;
-            Node next = node.next;
-            while (next != null) {
-                //    在链表中迭代找到合适的节点移除
-                if (next.key == key) {
-                    prev.next = next.next;
-                } else {
-                    prev = next;
-                    next = next.next;
-                }
-
-            }
-            return;
-        }
-
-        private int computeIndex(int key) {
-            return key % r.length;
-            /**
-             * 11 % 8 = 5
-             *
-             * 11 = 00000111
-             * 8  = 00000100
-             * 00000111 ^ 00000100 -1 = 00000011 = 5,但是要保证 后面被与的数是 2 的 n 次方
-             */
-            //    00000000
-        }
-
-        class Node {
-            public Node(int key, int value) {
+            public Pair(int key, int value) {
                 this.key = key;
                 this.value = value;
             }
 
-            int key;
-            int value;
-            Node next;
+            public int getKey() {
+                return key;
+            }
+
+            public int getValue() {
+                return value;
+            }
+
+            public void setValue(int value) {
+                this.value = value;
+            }
+        }
+
+        private static final int BASE = 769;
+        private LinkedList[] data;
+
+        /** Initialize your data structure here. */
+        public MyHashMap() {
+            data = new LinkedList[BASE];
+            for (int i = 0; i < BASE; ++i) {
+                data[i] = new LinkedList<Pair>();
+            }
+        }
+
+        /** value will always be non-negative. */
+        public void put(int key, int value) {
+            int h = hash(key);
+            Iterator<Pair> iterator = data[h].iterator();
+            while (iterator.hasNext()) {
+                Pair pair = iterator.next();
+                if (pair.getKey() == key) {
+                    pair.setValue(value);
+                    return;
+                }
+            }
+            data[h].offerLast(new Pair(key, value));
+        }
+
+        /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+        public int get(int key) {
+            int h = hash(key);
+            Iterator<Pair> iterator = data[h].iterator();
+            while (iterator.hasNext()) {
+                Pair pair = iterator.next();
+                if (pair.getKey() == key) {
+                    return pair.value;
+                }
+            }
+            return -1;
+        }
+
+        /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+        public void remove(int key) {
+            int h = hash(key);
+            Iterator<Pair> iterator = data[h].iterator();
+            while (iterator.hasNext()) {
+                Pair pair = iterator.next();
+                if (pair.key == key) {
+                    data[h].remove(pair);
+                    return;
+                }
+            }
+        }
+
+        private int hash(int key) {
+            return key % BASE;
         }
     }
+
 
 /**
  * Your MyHashMap object will be instantiated and called as such:
