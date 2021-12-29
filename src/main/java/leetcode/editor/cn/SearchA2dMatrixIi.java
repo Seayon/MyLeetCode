@@ -59,25 +59,27 @@ public class SearchA2dMatrixIi {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public boolean searchMatrix(int[][] matrix, int target) {
-            // 定义初始的查找范围,即全部,从左上角到右下角所有的
-            for (int i = 0; i < matrix.length; i++) {
-                //    按行暴力遍历
-                int startJ = 0;
-                int endJ = matrix[i].length - 1;
-                while (startJ <= endJ) {
-                    int middleIndex = (endJ - startJ) / 2 + startJ;
-                    int middle = matrix[i][middleIndex];
-                    if (middle == target) {
-                        return true;
-                    }
-                    if (middle > target) {
-                        endJ = middleIndex - 1;
-                    }
-                    if (middle < target) {
-                        startJ = middleIndex + 1;
-                    }
+            // 从左下角,或者右上角开始查找,从这两个方向看去,这个分布有点像 BST
+            // 这里从左下角开始
+            int x = matrix.length - 1;
+            int y = 0;
+            while (y < matrix[0].length && x >= 0) {
+                //获得当前遍历到的值
+                int current = matrix[x][y];
+                //    相等就返回 true
+                if (current == target) {
+                    return true;
+                }
+                //    如果当前这个值,大于目标值,由于该行是递增的,所以目标值不可能出现在改行,应该将行数减 1
+                if (current > target) {
+                    x--;
+                }
+                // 如果当前这个值,小于目标值,由于该列是递增的,所以值不可能在该列,应该将列数+1
+                if (current < target) {
+                    y++;
                 }
             }
+
             return false;
         }
     }
