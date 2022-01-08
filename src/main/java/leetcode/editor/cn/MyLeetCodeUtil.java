@@ -14,6 +14,7 @@ public class MyLeetCodeUtil {
     public static ListNode createNullListNode() {
         return null;
     }
+
     public static ListNode createOneListNode() {
         return new ListNode(3);
     }
@@ -32,6 +33,7 @@ public class MyLeetCodeUtil {
         }
         return listNode;
     }
+
     public static ListNode createSimpleListNode() {
         ListNode listNode1 = new ListNode(1);
         ListNode listNode2 = new ListNode(2);
@@ -72,6 +74,23 @@ public class MyLeetCodeUtil {
         if (b) {
             throw new RuntimeException("这个链表有环,停止运行");
         }
+    }
 
+    public static boolean checkListNodeSame(ListNode l1, ListNode l2) {
+        System.out.print("ListNode1 ==>: ");
+        printListNode(l1);
+        System.out.print("ListNode2 ==>: ");
+        printListNode(l2);
+        while (l1 != null && l2 != null) {
+            if (l1.val != l2.val) {
+                return false;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        if (l1 == null ^ l2 == null) {
+            return false;
+        }
+        return true;
     }
 }
