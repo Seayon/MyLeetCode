@@ -75,53 +75,30 @@ public class AddTwoNumbers {
      */
     class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-            ListNode p1 = l1, p2 = l2;
-            ListNode result = new ListNode();
-            ListNode reP = result;
-            ListNode pre = reP;
-            int increase = 0;
-            while (p1 != null && p2 != null) {
-                int val = p1.val + p2.val + increase;
-                if (val > 9) {
-                    reP.val = val - 10;
-                    increase = 1;
-                } else {
-                    reP.val = val;
-                    increase = 0;
+            ListNode listNodeResult = new ListNode(0);
+            ListNode listNodel1Temp = l1;
+            ListNode listNodel2Temp = l2;
+            ListNode listNodeResultTemp = listNodeResult;
+            int tempAdd = 0;
+            while (listNodel1Temp != null || listNodel2Temp != null) {
+                int val1 = listNodel1Temp == null ? 0 : listNodel1Temp.val;
+                int val2 = listNodel2Temp == null ? 0 : listNodel2Temp.val;
+                int val = val1 + val2 + tempAdd;
+                tempAdd = val / 10;//取整数，作为进位，下一轮相加所用的
+                listNodeResultTemp.next = new ListNode(val % 10);//求余数，作为本位留下来的
+                listNodeResultTemp = listNodeResultTemp.next;
+                //继续指向下一位的操作
+                if (listNodel1Temp != null) {
+                    listNodel1Temp = listNodel1Temp.next;
                 }
-                p1 = p1.next;
-                p2 = p2.next;
-                reP.next = new ListNode();
-                pre = reP;
-                reP = reP.next;
-            }
-            if (p1 == null && p2 == null && increase > 0) {
-                pre.next = new ListNode(increase);
-                return result;
-            }
-            //拼接剩下的
-            ListNode notNull = p1 == null ? p2 : p1;
-            pre.next = notNull;
-            // 如果下面有进位上来的,要进行计算
-            if (increase != 0) {
-                ListNode notNullTmp = notNull;
-                while (notNullTmp != null) {
-                    int i = notNullTmp.val + increase;
-                    if (i > 9) {
-                        notNullTmp.val = i - 10;
-                        increase = 1;
-                        if (notNullTmp.next == null) {
-                            notNullTmp.next = new ListNode(0);
-                        }
-                        notNullTmp = notNullTmp.next;
-                    } else {
-                        notNullTmp.val = i;
-                        break;
-                    }
-
+                if (listNodel2Temp != null) {
+                    listNodel2Temp = listNodel2Temp.next;
                 }
             }
-            return result;
+            if (tempAdd > 0) {
+                listNodeResultTemp.next = new ListNode(tempAdd);
+            }
+            return listNodeResult.next;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
