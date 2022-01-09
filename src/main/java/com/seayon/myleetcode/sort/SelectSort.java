@@ -13,18 +13,21 @@ public class SelectSort implements MySort {
 
     @Override
     public int[] sort(int[] array) {
-        for (int j = 0; j < array.length - 1; j++) {
-            int minIndex = j;
-            for (int i = j + 1; i < array.length; i++) {
-                if (array[i] < array[minIndex]) {
-                    minIndex = i;
+        if (array == null || array.length == 0) {
+            return array;
+        }
+        for (int j = array.length - 1; j > 0; j--) {
+            // 假定第一个位置的数最大
+            int maxIndex = 0;
+            for (int i = 0; i < j + 1; i++) {
+                if (array[i] > array[maxIndex]) {
+                    maxIndex = i;
                 }
             }
             int tmp = array[j];
-            array[j] = array[minIndex];
-            array[minIndex] = tmp;
+            array[j] = array[maxIndex];
+            array[maxIndex] = tmp;
         }
         return array;
     }
-
 }

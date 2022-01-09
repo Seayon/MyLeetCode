@@ -71,9 +71,9 @@ public class SortTest {
     }
 
 
-
     public void testSort(MySort mySort) {
-        System.out.println("开始执行: " + System.currentTimeMillis());
+        long startTime = System.currentTimeMillis();
+        System.out.println("开始执行: " + startTime);
 
 
         check(mySort.sort(new int[]{5, 6, 3, 3, 1, 2, 3, 0, 0, 0, 1, 3, 700}));
@@ -94,7 +94,9 @@ public class SortTest {
             integers[i] = random.nextInt(count);
         }
         check(mySort.sort(integers));
-        System.out.println("结束执行: " + System.currentTimeMillis());
+        long endTime = System.currentTimeMillis();
+        System.out.println("结束执行: " + endTime);
+        System.out.println("时间差: " + (endTime - startTime));
     }
 
     @DisplayName("检查有序")

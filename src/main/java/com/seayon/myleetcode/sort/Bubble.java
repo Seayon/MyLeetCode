@@ -21,10 +21,11 @@ public class Bubble implements MySort {
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < ints.length - 1; i++) {
-                if (ints[i] > ints[i + 1]) {
+                int current = ints[i];
+                if (current > ints[i + 1]) {
                     int tmp = ints[i + 1];
-                    ints[i+1] =ints[i];
                     ints[i] = tmp;
+                    ints[i + 1] = current;
                     sorted = false;
                 }
             }
