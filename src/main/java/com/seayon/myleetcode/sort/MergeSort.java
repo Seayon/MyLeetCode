@@ -14,36 +14,34 @@ import java.util.Arrays;
 public class MergeSort implements MySort {
     @Override
     public int[] sort(int[] array) {
+        //递归基,拆分到 2 个不再拆分
         if (array.length < 2) {
             return array;
         }
-        int middle = array.length / 2;
-        int[] a = Arrays.copyOfRange(array, 0, middle);
-        int[] b = Arrays.copyOfRange(array, middle, array.length);
+        int[] a = Arrays.copyOfRange(array, 0, array.length / 2);
+        int[] b = Arrays.copyOfRange(array, array.length / 2, array.length);
         return merge(sort(a), sort(b));
     }
 
     public int[] merge(int[] a, int[] b) {
         int[] result = new int[a.length + b.length];
-        int i = 0;
-        // 其实这个就是合并两个有序数组
-        while (a.length > 0 && b.length > 0) {
-            if (a[0] > b[0]) {
-                result[i++] = b[0];
-                b = Arrays.copyOfRange(b, 1, b.length);
+        int resultIndex = 0;
+        int ai = 0, bi = 0;
+        while (ai < a.length && bi < b.length) {
+            if (a[ai] < b[bi]) {
+                result[resultIndex++] = a[ai++];
             } else {
-                result[i++] = a[0];
-                a = Arrays.copyOfRange(a, 1, a.length);
+                result[resultIndex++] = b[bi++];
             }
         }
-        while (a.length > 0) {
-            result[i++] = a[0];
-            a = Arrays.copyOfRange(a, 1, a.length);
+        //将剩余的拼进去
+        while (ai < a.length) {
+            result[resultIndex++] = a[ai++];
         }
-        while (b.length > 0) {
-            result[i++] = b[0];
-            b = Arrays.copyOfRange(b, 1, b.length);
+        while (bi < b.length) {
+            result[resultIndex++] = b[bi++];
         }
         return result;
     }
+
 }
