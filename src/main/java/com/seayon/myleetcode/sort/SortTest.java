@@ -86,6 +86,7 @@ public class SortTest {
         check(mySort.sort(new int[]{2, 1, 2}));
         check(mySort.sort(new int[]{2, 1, 1, 2}));
         check(mySort.sort(new int[]{98, 2, 1, 1, 2}));
+        // check(mySort.sort(new int[]{-12, -3, -4, 2, 1, 1, 2}));
 
         Random random = new Random();
         int count = 10000;

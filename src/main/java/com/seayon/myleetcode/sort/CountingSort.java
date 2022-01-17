@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Author: SaeyonZhao
  * @Date: 2021/12/20 10:33 下午
  * @Version V1.0
- * @Description:
+ * @Description: 作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。
  */
 public class CountingSort implements MySort {
     @Override
@@ -18,10 +18,10 @@ public class CountingSort implements MySort {
             return null;
         }
         int max = array[0];
-        // get max number
-        for (int i = 1; i < array.length; i++) {
-            if (max < array[i]) {
-                max = array[i];
+        // get max and min number
+        for (int i : array) {
+            if (i > max) {
+                max = i;
             }
         }
 
@@ -31,13 +31,11 @@ public class CountingSort implements MySort {
         }
 
         int[] result = new int[array.length];
-        for (int i = 0, j = 0; i < result.length; ) {
-            if (tmp[j] > 0) {
-                result[i] = j;
-                tmp[j]--;
-                i++;
-            } else {
-                j++;
+        int j = 0;
+        for (int i = 0; i < tmp.length; i++) {
+            while (tmp[i] != 0) {
+                result[j++] = i;
+                tmp[i]--;
             }
         }
 
