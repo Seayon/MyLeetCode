@@ -76,16 +76,16 @@ public class SortTest {
         System.out.println("开始执行: " + startTime);
 
 
-        check(mySort.sort(new int[]{5, 6, 3, 3, 1, 2, 3, 0, 0, 0, 1, 3, 700}));
-        check(mySort.sort(new int[]{0, 1}));
-        check(mySort.sort(new int[]{0, 2}));
-        check(mySort.sort(new int[]{0, 0}));
-        check(mySort.sort(new int[]{0}));
-        check(mySort.sort(new int[]{}));
-        check(mySort.sort(new int[]{2, 1}));
-        check(mySort.sort(new int[]{2, 1, 2}));
-        check(mySort.sort(new int[]{2, 1, 1, 2}));
-        check(mySort.sort(new int[]{98, 2, 1, 1, 2}));
+        check(mySort.mySort(new int[]{5, 6, 3, 3, 1, 2, 3, 0, 0, 0, 1, 3, 700}));
+        check(mySort.mySort(new int[]{0, 1}));
+        check(mySort.mySort(new int[]{0, 2}));
+        check(mySort.mySort(new int[]{0, 0}));
+        check(mySort.mySort(new int[]{0}));
+        check(mySort.mySort(new int[]{}));
+        check(mySort.mySort(new int[]{2, 1}));
+        check(mySort.mySort(new int[]{2, 1, 2}));
+        check(mySort.mySort(new int[]{2, 1, 1, 2}));
+        check(mySort.mySort(new int[]{98, 2, 1, 1, 2}));
         // check(mySort.sort(new int[]{-12, -3, -4, 2, 1, 1, 2}));
 
         Random random = new Random();
@@ -94,7 +94,7 @@ public class SortTest {
         for (int i = 0; i < count; i++) {
             integers[i] = random.nextInt(count);
         }
-        check(mySort.sort(integers));
+        check(mySort.mySort(integers));
         long endTime = System.currentTimeMillis();
         System.out.println("结束执行: " + endTime);
         System.out.println("时间差: " + (endTime - startTime));
