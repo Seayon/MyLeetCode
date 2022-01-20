@@ -19,25 +19,28 @@ public class QuickSort implements MySort {
         return quickSort(array, 0, array.length - 1);
     }
 
-    public int[] quickSort(int[] array, int start, int end) {
+    private int[] quickSort(int[] array, int start, int end) {
         if (end > start) {
-            int p = array[start];
+            //假定起始的第一个值就是 pivot 参考值,备份第一个值
+            int pivot = array[start];
             int lo = start;
             int hi = end;
             while (lo != hi) {
-                while (hi > lo && array[hi] >= p) {
+                while (lo < hi && array[hi] >= pivot) {
                     hi--;
                 }
                 array[lo] = array[hi];
-                while (lo < hi && array[lo] <= p) {
+                while (lo < hi && array[lo] <= pivot) {
                     lo++;
                 }
                 array[hi] = array[lo];
             }
-            array[lo] = p;
+            array[lo] = pivot;
             quickSort(array, start, lo);
             quickSort(array, lo + 1, end);
         }
         return array;
     }
+
+
 }
