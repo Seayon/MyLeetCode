@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Author: SaeyonZhao
  * @Date: 2021/12/19 4:58 下午
  * @Version V1.0
- * @Description:
+ * @Description: 归并排序
  */
 public class MergeSort implements MySort {
     @Override
@@ -20,26 +20,25 @@ public class MergeSort implements MySort {
         }
         int[] a = Arrays.copyOfRange(array, 0, array.length / 2);
         int[] b = Arrays.copyOfRange(array, array.length / 2, array.length);
-        return merge(sort(a), sort(b));
+        int[] merge = merge(sort(a), sort(b));
+        return merge;
     }
 
     public int[] merge(int[] a, int[] b) {
         int[] result = new int[a.length + b.length];
-        int resultIndex = 0;
-        int ai = 0, bi = 0;
-        while (ai < a.length && bi < b.length) {
-            if (a[ai] < b[bi]) {
-                result[resultIndex++] = a[ai++];
+        int i = 0, j = 0, r = 0;
+        while (i < a.length && j < b.length) {
+            if (a[i] < b[j]) {
+                result[r++] = a[i++];
             } else {
-                result[resultIndex++] = b[bi++];
+                result[r++] = b[j++];
             }
         }
-        //将剩余的拼进去
-        while (ai < a.length) {
-            result[resultIndex++] = a[ai++];
+        while (i < a.length) {
+            result[r++] = a[i++];
         }
-        while (bi < b.length) {
-            result[resultIndex++] = b[bi++];
+        while (j < b.length) {
+            result[r++] = b[j++];
         }
         return result;
     }

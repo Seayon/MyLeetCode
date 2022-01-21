@@ -1,17 +1,12 @@
 package com.seayon.myleetcode.sort;
 
 import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -107,7 +102,7 @@ public class SortTest {
         }
         for (int i = 0; i < ints.length - 1; i++) {
             if (ints[i] > ints[i + 1]) {
-                System.out.println(Arrays.toString(ints) + ",");
+                System.out.println(Arrays.toString(ints));
                 throw new AssertionFailedError("不是升序的");
             }
         }

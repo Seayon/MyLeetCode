@@ -14,11 +14,11 @@ import java.util.Arrays;
 public interface MySort {
 
     default void before(int[] array) {
-        System.out.println("排序前: " + Arrays.toString(array));
+        System.out.println("     排序前: " + Arrays.toString(array));
     }
 
     default void after(int[] array) {
-        System.out.println("排序后: " + Arrays.toString(array));
+        System.out.println("     排序后: " + Arrays.toString(array));
     }
 
     default void expect(int[] array) {
@@ -31,7 +31,7 @@ public interface MySort {
         System.out.println("");
         Arrays.copyOf(array, array.length);
         before(array);
-        sort(array);
+        array = sort(array);
         after(array);
         expect(bak);
         System.out.println("");
