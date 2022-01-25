@@ -51,6 +51,8 @@ import java.util.Arrays;
 public class LongestPalindromicSubstring {
     public static void main(String[] args) {
         Solution solution = new LongestPalindromicSubstring().new Solution();
+        Assertions.assertEquals("ababababababa", solution.longestPalindrome("ababababababa"));
+        Assertions.assertEquals("anana", solution.longestPalindrome("bananas"));
         Assertions.assertEquals("bab", solution.longestPalindrome("babad"));
         Assertions.assertEquals("bbbb", solution.longestPalindrome("bbbbd"));
         Assertions.assertEquals("bb", solution.longestPalindrome("cbbd"));
@@ -58,14 +60,20 @@ public class LongestPalindromicSubstring {
         Assertions.assertEquals("a", solution.longestPalindrome("ac"));
         // "abccdbeeeeeeeee";
         Assertions.assertEquals("eeeeeeeee", solution.longestPalindrome("abccdbeeeeeeeee"));
-        Assertions.assertEquals("ac", solution.longestPalindrome("a"));
+        Assertions.assertEquals("a", solution.longestPalindrome("ac"));
+        Assertions.assertEquals("cbcbc", solution.longestPalindrome("cbcbcb"));
+        Assertions.assertEquals("", solution.longestPalindrome(""));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String longestPalindrome(String s) {
+            if (s == null || s.length() == 0) {
+                return "";
+            }
             char[] chars = s.toCharArray();
-            String result = "";
+            int leftMax = 0;
+            int rightMax = 0;
             for (int i = 0; i < chars.length; i++) {
                 int left = i - 1;
                 int right = i + 1;
@@ -80,12 +88,12 @@ public class LongestPalindromicSubstring {
                     left--;
                     right++;
                 }
-                String tmpResultChar = new String(Arrays.copyOfRange(chars, left + 1, right));
-                if (tmpResultChar.length() > result.length()) {
-                    result = tmpResultChar;
+                if (right - left - 1 > rightMax - leftMax - 1) {
+                    leftMax = left;
+                    rightMax = right;
                 }
             }
-            return result;
+            return new String(Arrays.copyOfRange(chars, leftMax + 1, rightMax));
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
