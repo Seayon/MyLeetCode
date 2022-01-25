@@ -78,38 +78,15 @@ public class PalindromeNumber {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public boolean isPalindrome(int x) {
-            if (x < 0) {
+            if (x < 0 || x % 10 == 0 && x != 0) {
                 return false;
             }
-            if (x > 0 && x < 10) {
-                return true;
+            int revertNumber = 0;
+            while (x > revertNumber) {
+                revertNumber = revertNumber * 10 + x % 10;
+                x /= 10;
             }
-            int o = x;
-            int p = 1;
-            int r = 0;
-            int divid = 1000000000;
-            while (divid > 0) {
-                int quotient = x / divid;
-                if (quotient == 0) {
-                    // 如果当前还没有值
-                    if (r == 0) {
-                        // 就略过
-                        divid /= 10;
-                        continue;
-                    } else {
-                        // 否则就记录下来这个间隙
-                        divid /= 10;
-                        p *= 10;
-                        continue;
-                    }
-                }
-                // 累加结果值
-                r = quotient * p + r;
-                x = x - divid * quotient;
-                divid /= 10;
-                p *= 10;
-            }
-            return r == o;
+            return x == revertNumber || revertNumber / 10 == x;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
