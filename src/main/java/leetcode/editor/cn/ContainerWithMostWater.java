@@ -54,7 +54,7 @@ import org.junit.jupiter.api.Assertions;
 public class ContainerWithMostWater {
     public static void main(String[] args) {
         Solution solution = new ContainerWithMostWater().new Solution();
-        Assertions.assertEquals(70, solution.maxArea(new int[]{0,14,6,2,10,9,4,1,10,3}));
+        Assertions.assertEquals(70, solution.maxArea(new int[]{0, 14, 6, 2, 10, 9, 4, 1, 10, 3}));
         Assertions.assertEquals(49, solution.maxArea(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7}));
         Assertions.assertEquals(1, solution.maxArea(new int[]{1, 1}));
         Assertions.assertEquals(16, solution.maxArea(new int[]{4, 3, 2, 1, 4}));
@@ -83,7 +83,10 @@ public class ContainerWithMostWater {
                     if (currentCapacity > max) {
                         max = currentCapacity;
                     }
-                    j++;
+                    int jt = max / height[i] + 1;
+                    if (jt > j++) {
+                        j = jt;
+                    }
                 }
             }
             return max;
