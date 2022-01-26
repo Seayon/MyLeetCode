@@ -52,16 +52,14 @@ public class LongestCommonPrefix {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String longestCommonPrefix(String[] strs) {
+            Arrays.sort(strs);
             String first = strs[0];
             if (strs.length < 2) {
                 return first;
             }
-            String second = strs[1];
-            String commonPrefix = findCommonPrefix(first, second);
-            for (int i = 2; i < strs.length; i++) {
-                commonPrefix = findCommonPrefix(commonPrefix, strs[i]);
-            }
-            return commonPrefix;
+            String second = strs[strs.length - 1];
+            return findCommonPrefix(first, second);
+
         }
 
         private String findCommonPrefix(String s1, String s2) {
