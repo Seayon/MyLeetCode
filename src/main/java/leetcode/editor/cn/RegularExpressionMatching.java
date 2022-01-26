@@ -1,4 +1,4 @@
-  //给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
+//给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
 //
 //
 // '.' 匹配任意单个字符
@@ -60,17 +60,67 @@
 // Related Topics 递归 字符串 动态规划 👍 2682 👎 0
 
 
-  package leetcode.editor.cn;
-  public class RegularExpressionMatching{
-      public static void main(String[] args) {
-           Solution solution = new RegularExpressionMatching().new Solution();
-      }
-      //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public boolean isMatch(String s, String p) {
-        return true;
+package leetcode.editor.cn;
+
+import org.junit.jupiter.api.Assertions;
+
+public class RegularExpressionMatching {
+    public static void main(String[] args) {
+        Solution solution = new RegularExpressionMatching().new Solution();
+        Assertions.assertEquals(false, solution.isMatch("aa", "a"));
+        Assertions.assertEquals(true, solution.isMatch("aa", "a*"));
+        Assertions.assertEquals(true, solution.isMatch("ab", ".*"));
+        Assertions.assertEquals(true, solution.isMatch("aab", "c*a*b"));
+        Assertions.assertEquals(false, solution.isMatch("mississippi", "mis*is*p*."));
+        Assertions.assertEquals(false, solution.isMatch("aaacb", "c*a*b"));
+        Assertions.assertEquals(true, solution.isMatch("mab", "c*.a*b"));
+        Assertions.assertEquals(true, solution.isMatch("cmab", "c*.a*b"));
+        Assertions.assertEquals(true, solution.isMatch("cab", "c*.a*b"));// 这种 需要考虑占位
+        Assertions.assertEquals(true, solution.isMatch("cmab", "c*.a*b"));
+        Assertions.assertEquals(true, solution.isMatch("caab", "c*.a*b"));
+        Assertions.assertEquals(true, solution.isMatch("ccccab", "c*a*b"));
+        Assertions.assertEquals(true, solution.isMatch("cab", "c.*a*b"));//
+        Assertions.assertEquals(true, solution.isMatch("cxjoijoaiab", "c*.*a*b"));//
+        Assertions.assertEquals(true, solution.isMatch("cxjoijoaiab", "c*.*a*b"));//
+        Assertions.assertEquals(true, solution.isMatch("xjoijoaiab", "c*.*a*b"));//
+        Assertions.assertEquals(true, solution.isMatch("ab", "c*.*a*b"));//
+
     }
-}
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public boolean isMatch(String s, String p) {
+            //动态递归计算
+            int pe = p.length() - 1;
+            String pattern = "";
+            for (int i = pe; i > 0; i--) {
+                char c = (char) p.indexOf(i);
+                if (c == '.') {
+                    if (pattern.equals(String.valueOf('*'))) {
+                        return true;
+                    }
+                    return isMatch(s.substring(0, s.length() - 1), p.substring(0, p.length() - -1));
+                }
+                // 如果不是 * 也不是.,那就是字母,要求当前字符串的最后一个必须匹配
+                // 并且 pattern 没有存储*
+                if (c != '.' && c != '*' && pattern != "*") {
+                    // 如果匹配就截取继续检查剩下的字符
+                    if (s.indexOf(s.length() - 1) == c) {
+                        return isMatch(s.substring(0, s.length() - 1), p.substring(0, p.length() - 1));
+                    } else {
+                        return false;
+                    }
+                }
+                pattern = pattern + c;
+                if (c == '*') {
+                    continue;
+                }
+
+
+            }
+            return true;
+        }
+    }
 //leetcode submit region end(Prohibit modification and deletion)
 
-  }
+}
