@@ -55,7 +55,7 @@ public class LetterCombinationsOfAPhoneNumber {
         Assertions.assertArrayEquals(a, strings.toArray(new String[strings.size()]));
 
         List<String> strings2 = solution.letterCombinations("2");
-        String[] a2 = {"a","b","c"};
+        String[] a2 = {"a", "b", "c"};
         Assertions.assertArrayEquals(a2, strings2.toArray(new String[strings2.size()]));
 
     }
