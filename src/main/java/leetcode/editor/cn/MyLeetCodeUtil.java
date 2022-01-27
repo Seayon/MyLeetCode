@@ -48,12 +48,13 @@ public class MyLeetCodeUtil {
         listNode3.next = listNode4;
         listNode4.next = listNode5;
         listNode5.next = listNode6_2;
+        printListNode(listNode1);
         return listNode1;
     }
 
     public static void printListNode(ListNode listNode) {
         if (listNode == null) {
-            System.out.println("ListNode: " + listNode);
+            System.out.println("ListNode: " + listNode + " \n");
             return;
         }
         checkListNodeCycle(listNode);
