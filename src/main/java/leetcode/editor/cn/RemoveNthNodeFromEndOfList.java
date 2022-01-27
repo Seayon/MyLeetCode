@@ -70,24 +70,20 @@ public class RemoveNthNodeFromEndOfList {
     class Solution {
         public ListNode removeNthFromEnd(ListNode head, int n) {
             // 哑元节点
-            ListNode dumpHead = new ListNode();
-            dumpHead.next = head;
-            ListNode p = head;
-            int i = 1;
-            while (i < n && p != null && p.next != null) {
-                p = p.next;
-                i++;
+            ListNode dummyHead = new ListNode(0, head);
+            ListNode first = head;
+            ListNode second = dummyHead;
+            int i = 0;
+            while (i < n) {
+                first = first.next;
+                ++i;
             }
-            while (p != null && p.next != null) {
-                dumpHead = dumpHead.next;
-                p = p.next;
+            while (first != null) {
+                first = first.next;
+                second = second.next;
             }
-            if (dumpHead.next == head) {
-                dumpHead.next = dumpHead.next == null ? null : dumpHead.next.next;
-                return dumpHead.next;
-            }
-            dumpHead.next = dumpHead.next == null ? null : dumpHead.next.next;
-            return head;
+            second.next = second.next.next;
+            return dummyHead.next;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
