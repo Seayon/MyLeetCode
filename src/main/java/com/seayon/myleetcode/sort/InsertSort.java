@@ -18,6 +18,7 @@ public class InsertSort implements MySort {
             //暂存 j 位置的值为当前值
             int current = array[j];
             //一直往前找,如果当前 j 位置的值小于 j-1 位置的值,就往后依次挪动,然后 j-- 继续看下一个值
+            //注意这里 j > 0 要放在前面用
             while (j > 0 && current < array[j - 1]) {
                 array[j] = array[j - 1];
                 j--;

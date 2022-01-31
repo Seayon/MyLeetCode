@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class MergeSort implements MySort {
     @Override
     public int[] sort(int[] array) {
-        //递归基,拆分到 2 个不再拆分
+        //递归基,拆分到 1 个不再拆分
         if (array.length < 2) {
             return array;
         }

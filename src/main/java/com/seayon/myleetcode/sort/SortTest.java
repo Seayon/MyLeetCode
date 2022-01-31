@@ -50,7 +50,7 @@ public class SortTest {
     @Test
     @DisplayName("归并排序")
     public void testMergeSort() {
-        testSort(new MergeSort());
+        testSort(new MergeSort2());
     }
 
     @Test
@@ -81,6 +81,10 @@ public class SortTest {
         check(mySort.mySort(new int[]{2, 1, 2}));
         check(mySort.mySort(new int[]{2, 1, 1, 2}));
         check(mySort.mySort(new int[]{98, 2, 1, 1, 2}));
+        check(mySort.mySort(new int[]{2, 1, 2, 3, 4, 5}));
+        check(mySort.mySort(new int[]{1, 3, 5, 7, 9}));
+        check(mySort.mySort(new int[]{1, 3, 4, 5, 7, 2}));
+        check(mySort.mySort(new int[]{1, 3, 4, 8, 7, 2}));
         // check(mySort.sort(new int[]{-12, -3, -4, 2, 1, 1, 2}));
 
         Random random = new Random();
@@ -92,7 +96,7 @@ public class SortTest {
         check(mySort.mySort(integers));
         long endTime = System.currentTimeMillis();
         System.out.println("结束执行: " + endTime);
-        System.out.println("时间差: " + (endTime - startTime));
+        System.out.println("总计用时: " + (endTime - startTime) + "ms");
     }
 
     @DisplayName("检查有序")
