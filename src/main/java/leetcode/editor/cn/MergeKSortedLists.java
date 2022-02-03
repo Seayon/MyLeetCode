@@ -73,19 +73,23 @@ public class MergeKSortedLists {
      */
     class Solution {
         public ListNode mergeKLists(ListNode[] lists) {
-            return solution1(lists);
+            return merge(lists, 0, lists.length - 1);
         }
 
 
-        public ListNode solution1(ListNode[] lists) {
-            ListNode tmp = null;
-            for (int i = 0; i < lists.length; i++) {
-                tmp = merge(tmp, lists[i]);
+        public ListNode merge(ListNode[] lists, int l, int r) {
+            if (l == r) {
+                return lists[l];
             }
-            return tmp;
+            if (l > r) {
+                return null;
+            }
+            int mid = (l + r) >> 1;
+
+            return mergeTwoList(merge(lists, l, mid), merge(lists, mid + 1, r));
         }
 
-        public ListNode merge(ListNode listNode1, ListNode listNode2) {
+        public ListNode mergeTwoList(ListNode listNode1, ListNode listNode2) {
             ListNode result = new ListNode();
             ListNode p = result;
             while (listNode1 != null && listNode2 != null) {
