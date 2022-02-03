@@ -50,7 +50,7 @@ public class SortTest {
     @Test
     @DisplayName("归并排序")
     public void testMergeSort() {
-        testSort(new MergeSort2());
+        testSort(new MergeSort());
     }
 
     @Test
