@@ -47,6 +47,8 @@
 
 package leetcode.editor.cn;
 
+import java.util.PriorityQueue;
+
 public class MergeKSortedLists {
     public static void main(String[] args) {
         Solution solution = new MergeKSortedLists().new Solution();
@@ -72,44 +74,47 @@ public class MergeKSortedLists {
      * }
      */
     class Solution {
+
+        class Status implements Comparable<Status> {
+
+            int val;
+
+            ListNode ptr;
+
+            public Status(int val, ListNode ptr) {
+                this.val = val;
+                this.ptr = ptr;
+            }
+
+            @Override
+            public int compareTo(Status o) {
+                return this.val - o.val;
+            }
+
+        }
+
+        PriorityQueue<Status> queue = new PriorityQueue();
+
         public ListNode mergeKLists(ListNode[] lists) {
-            return merge(lists, 0, lists.length - 1);
-        }
-
-
-        public ListNode merge(ListNode[] lists, int l, int r) {
-            if (l == r) {
-                return lists[l];
-            }
-            if (l > r) {
-                return null;
-            }
-            int mid = (l + r) >> 1;
-
-            return mergeTwoList(merge(lists, l, mid), merge(lists, mid + 1, r));
-        }
-
-        public ListNode mergeTwoList(ListNode listNode1, ListNode listNode2) {
-            ListNode result = new ListNode();
-            ListNode p = result;
-            while (listNode1 != null && listNode2 != null) {
-                if (listNode1.val < listNode2.val) {
-                    p.next = listNode1;
-                    listNode1 = listNode1.next;
-                } else {
-                    p.next = listNode2;
-                    listNode2 = listNode2.next;
+            for (ListNode node : lists) {
+                if (node != null) {
+                    queue.offer(new Status(node.val, node));
                 }
-                p = p.next;
             }
-            if (listNode1 != null) {
-                p.next = listNode1;
+            ListNode head = new ListNode(0);
+            ListNode tail = head;
+            while (!queue.isEmpty()) {
+                Status f = queue.poll();
+                tail.next = f.ptr;
+                tail = tail.next;
+                if (f.ptr.next != null) {
+                    queue.offer(new Status(f.ptr.next.val, f.ptr.next));
+                }
             }
-            if (listNode2 != null) {
-                p.next = listNode2;
-            }
-            return result.next;
+            return head.next;
         }
+
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
