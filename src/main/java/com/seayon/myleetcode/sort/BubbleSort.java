@@ -13,7 +13,7 @@ import java.util.Collections;
  * @Version V1.0
  * @Description: 冒泡排序
  */
-public class Bubble implements MySort {
+public class BubbleSort implements MySort {
 
     @Override
     public int[] sort(int[] ints) {

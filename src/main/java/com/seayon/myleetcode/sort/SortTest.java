@@ -1,5 +1,6 @@
 package com.seayon.myleetcode.sort;
 
+import com.sun.org.apache.bcel.internal.generic.Select;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ public class SortTest {
     @Test
     @DisplayName("冒泡排序测试")
     public void test() {
-        testSort(new Bubble());
+        testSort(new BubbleSort());
         Assertions.assertEquals(1, 1, "这个值应该相等");
     }
 
@@ -65,6 +66,11 @@ public class SortTest {
         testSort(new CountingSort());
     }
 
+    @Test
+    @DisplayName("堆排序")
+    public void testHeapSort() {
+        testSort(new HeapSort());
+    }
 
     public void testSort(MySort mySort) {
         long startTime = System.currentTimeMillis();
