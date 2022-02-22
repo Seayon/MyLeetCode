@@ -65,19 +65,21 @@ public class ReverseLinkedList {
      */
     class Solution {
         public ListNode reverseList(ListNode head) {
-            // 前一个节点
+            //定义一个前置节点,初始化的时候应该是为 null 的
             ListNode prev = null;
+            // 当前节点
             ListNode current = head;
             while (current != null) {
-                // 暂存记录下来下个节点在哪里
+                // 暂存记录下当前节点的下一个节点
                 ListNode tmp = current.next;
-                // 把当前节点指向前驱节点
+                //当前节点指向前驱节点,实现反转
                 current.next = prev;
-                // 当前节点设置为前驱节点
+                //前驱节点指向当前节点,准备继续往下处理
                 prev = current;
-                // 当前节点指向下一个节点,由于刚才上面暂存了,所以可以找到
+                //当前节点指向自身的下一个节点(上面用 tmp 来暂存了)
                 current = tmp;
             }
+            // 返回前驱节点,是一个不为 null 的最后的一个节点
             return prev;
         }
     }
