@@ -1,12 +1,13 @@
 package com.seayon.myleetcode.sort;
 
-import com.sun.org.apache.bcel.internal.generic.Select;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -21,6 +22,36 @@ import java.util.Random;
  */
 @Log
 public class SortTest {
+
+    @Test
+    @DisplayName("测试临时练习的东西")
+    public void testTmp() {
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        URL resource = classLoader.getResource("com/seayon/myleetcode/practice");
+        File file = new File(resource.getFile());
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                String fileName = f.getAbsolutePath();
+                String className = fileName.substring(fileName.indexOf("com"), fileName.indexOf(".class")).replace("/", ".");
+                try {
+                    Class<?> aClass = classLoader.loadClass(className);
+                    if (MySort.class.isAssignableFrom(aClass)) {
+                        MySort mySort = (MySort) aClass.newInstance();
+                        testSort(mySort);
+                    }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
+
     @Test
     @DisplayName("冒泡排序测试")
     public void test() {
@@ -56,7 +87,7 @@ public class SortTest {
 
     @Test
     @DisplayName("快速排序")
-    public void testQuickSOrt() {
+    public void testQuickSort() {
         testSort(new QuickSort());
     }
 
@@ -91,6 +122,7 @@ public class SortTest {
         check(mySort.mySort(new int[]{1, 3, 5, 7, 9}));
         check(mySort.mySort(new int[]{1, 3, 4, 5, 7, 2}));
         check(mySort.mySort(new int[]{1, 3, 4, 8, 7, 2}));
+        check(mySort.mySort(new int[]{1, 3, 4, 5, 7, 2}));
         // check(mySort.sort(new int[]{-12, -3, -4, 2, 1, 1, 2}));
 
         Random random = new Random();
@@ -118,4 +150,36 @@ public class SortTest {
         }
     }
 
+    @Test
+    @DisplayName("检查聚宝盆算法")
+    public void testIn() {
+        Assertions.assertEquals(1, increase(1));
+        Assertions.assertEquals(3, increase(2));
+        Assertions.assertEquals(7, increase(3));
+        Assertions.assertEquals(15, increase(4));
+        System.out.println(increase(28));
+    }
+
+    public Long increase(int n) {
+        int i = 1;
+        long s = 1;
+        long t = 1;
+        while (i < n) {
+            t = t << 1;
+            s = s + t;
+            i++;
+        }
+        return s;
+    }
+
+    @Test
+    @DisplayName("测试 Integer 的比较和缓存")
+    public void testIntegerCompare() {
+        Integer a = 100;
+        Integer b = 100;
+        Integer c = 1000;
+        Integer d = 1000;
+        System.out.println(a == b);
+        System.out.println(c == d);
+    }
 }

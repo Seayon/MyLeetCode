@@ -20,8 +20,7 @@ public class MergeSort implements MySort {
         }
         int[] a = Arrays.copyOfRange(array, 0, array.length / 2);
         int[] b = Arrays.copyOfRange(array, array.length / 2, array.length);
-        int[] merge = merge(sort(a), sort(b));
-        return merge;
+        return merge(sort(a), sort(b));
     }
 
     public int[] merge(int[] a, int[] b) {
@@ -42,5 +41,4 @@ public class MergeSort implements MySort {
         }
         return result;
     }
-
 }
